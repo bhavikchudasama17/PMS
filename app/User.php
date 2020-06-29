@@ -1,5 +1,7 @@
 <?php
-
+// bhavik
+// users model
+// 25-6-20
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;

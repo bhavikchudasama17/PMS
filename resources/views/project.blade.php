@@ -1,19 +1,12 @@
+<!-- bhavik chudasama
+Project view
+25-06-20 -->
 @extends('layouts.app')
 
 @section('content')
-<head>
 
-<link  rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" >
 
-</head>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" ></script>
-  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.min.js"></script>
-  <script type="text/javascript">
-  $(document).ready(function() {
-    $('#example').DataTable();
-} );
-</script>
+
 <div class="container">
 <!-- Modal for adding category-->
 <div class="modal fade" id="createpro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -25,19 +18,19 @@
                     
                   </div>
                   <div class="modal-body">
-                  <form method="post" action="{{ route('pro.store' )}}" enctype="multipart/form-data">
+                  <form method="post" action="{{ route('pro.store' )}}" >
 
                     @csrf
 
                     <label >Enter project name</label>
-                    <input type="hidden" name="mid" value="{{ Auth::user()->id }}">
-                    <input type="text" name="name" class="form-control input-lg" />
+                    <input type="hidden" name="mid" value="{{ Auth::user()->id }}" >
+                    <input type="text" name="name" class="form-control input-lg" required/>
                     <label >Enter vendor name</label>
 
-                    <input type="text" name="vendor" class="form-control input-lg" />
+                    <input type="text" name="vendor" class="form-control input-lg" required/>
                     <label >Enter Description of project</label>
 
-                    <input type="text" name="desc" class="form-control input-lg" />
+                    <textarea name="desc" class="form-control input-lg"  required></textarea>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary">Save</button>
                   </form>
@@ -57,8 +50,8 @@
                 <div class="card-header">projects</div>
 
                 <div class="card-body">
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
-        <a href="#createpro" type="button" class="btn btn-primary" style="float : right;"data-toggle="modal" ><i class="fa fa-plus"></i></a>
+                <table  class="table table-striped table-bordered" style="width:100%">
+        <a href="#createpro" type="button" class="btn btn-success" style="float : right;"data-toggle="modal" >ADD NEW</a>
         <thead>
             <tr>
                 <th>Projects</th>
@@ -73,21 +66,22 @@
             <tr>
             @foreach($data as $row)
                 <td>{{$row->name}}</td>
-                <td>{{$row->mid}}</td>
+                <td>{{$row->manname}}</td>
                 <td>{{$row->vendor}}</td>
                 <td>{{$row->desc}}</td>
                 <td>{{$row->created_at}}</td>
 
-                <td><a href="{{route('pro.edit',$row->id)}}" class="btn btn-info btn-circle">
-                    <i class="fas fa-info-circle"></i>
+                <td>@if(Auth::user()->id==$row->mid)
+                <a href="{{route('pro.edit',$row->id)}}" class="btn btn-info btn-circle">
+                    Edit
                   </a>
                   <form action="{{ route('pro.destroy', $row->id) }}" method="post">
                 @csrf
 				 @method('DELETE')
 					 <button type="submit" class="btn btn-danger">Delete</button>
  					
-				</form>
-                
+			      	</form>
+                @endif
                   </td>
             
             </tr>

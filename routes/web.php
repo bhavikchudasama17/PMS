@@ -26,10 +26,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(["middleware"=>'auth'],function(){
     Route::resource('pro','projectscontroller');
-
+    Route::resource('usr','usercontroller');
+    Route::resource('prousr','prousrcontroller');
+    Route::resource('myacc','myaccountcontroller');
 });

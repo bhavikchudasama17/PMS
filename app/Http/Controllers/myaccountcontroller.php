@@ -1,12 +1,11 @@
 <?php
-//bhavik chudasama
-// projectcontroller
-// 25-6-20 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\projects;
-class projectscontroller extends Controller
+use App\User;
+use Illuminate\Support\Facades\Auth;
+class myaccountcontroller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,8 @@ class projectscontroller extends Controller
      */
     public function index()
     {
-        $data=projects::join('users', 'users.id', '=', 'projects.mid')
-        ->select('users.name AS manname','projects.*')
-        ->get();
-       return view('project',compact('data'));
+       
+       return view ('myacc');
     }
 
     /**
@@ -39,14 +36,7 @@ class projectscontroller extends Controller
      */
     public function store(Request $request)
     {
-        $form_data = array(
-            'mid' => $request->mid,
-            'name' => $request->name,
-            'vendor' => $request->vendor,
-            'desc' => $request->desc,
-        );
-        projects::Create($form_data);
-        return back()->withInput();
+        //
     }
 
     /**
@@ -68,8 +58,7 @@ class projectscontroller extends Controller
      */
     public function edit($id)
     {
-       $data=projects::findOrFail($id);
-       return view('editpro',compact('data'));
+        //
     }
 
     /**
@@ -81,13 +70,7 @@ class projectscontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-       $form_data= array(
-        'name'=>$request->name,
-        'vendor'=>$request->vendor,
-        'desc'=>$request->desc,
-       );
-       projects::whereId($id)->update($form_data);
-       return redirect('pro');
+        //
     }
 
     /**
@@ -98,7 +81,6 @@ class projectscontroller extends Controller
      */
     public function destroy($id)
     {
-        projects::whereId($id)->delete();
-        return back()->withInput();
+        //
     }
 }
